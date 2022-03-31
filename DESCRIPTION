@@ -1,0 +1,12 @@
+Package: multiFastGrepl
+Type: Package
+Title: grepl several patterns, very fast!
+Version: 0.0.0.9000
+Date: 2022-03-31
+Author: Pavel Panko
+Maintainer: Pavel Panko <pavelppanko@email.com>
+Description: Specific application of grepl computing in parallel via RcppParallel for sea		   rching across a dataframe with a title and abstract field.
+License: GPL (>= 3)
+Imports: Rcpp (>= 1.0.8), RcppParallel (>= 5.1.5)
+LinkingTo: Rcpp, RcppParallel
+SystemRequirements: GNU make
