@@ -70,7 +70,7 @@ struct RegexSearch : public Worker
   void operator()(std::size_t begin, std::size_t end) {
     for (std::size_t i = begin; i < end; i++) {
       for (std::size_t j = 0; j < regexVec.size(); j++) {
-	boost::regex re(regexVec[j]);
+	boost::regex re(regexVec[j], boost::regex::icase);
 	output(i,j) = boost::regex_search(stringVec[i], re);
       }
     }
@@ -87,7 +87,7 @@ Rcpp::DataFrame greplParallel(Rcpp::DataFrame df, Rcpp::List keyWordList) {
 
   RegexSearch RegexSearch(stringVec, regexVec, output);
 
-  parallelFor(0, stringVec.size(), RegexSearch, 20);
+  parallelFor(0, stringVec.size(), RegexSearch);
 
   return matrix_to_dataframe(output, keyWordList.names(), df["id"]);
 }
