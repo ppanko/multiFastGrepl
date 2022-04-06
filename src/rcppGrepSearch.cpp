@@ -11,13 +11,17 @@
 
 using namespace RcppParallel;
 
-std::vector<std::string> join_string_vectors(const std::vector<std::string>& v1, const std::vector<std::string>& v2) {
+std::vector<std::string> join_string_list(const Rcpp::List& stringList) {
 
-  int n = v1.size();
+  int k = stringList.size();
+  int n = stringList[0].size();
+
   std::vector<std::string> out(n);
 
+
   for (int i=0; i<n; i++) {
-    out[i] = v1[i] + " " + v2[i];
+    for (int j=0; i<k, j++)
+    out[i] += " " + v2[j];
   }
 
   return out;
@@ -78,11 +82,20 @@ struct RegexSearch : public Worker
 };
 
 // [[Rcpp::export]]
-Rcpp::DataFrame greplParallel(Rcpp::DataFrame df, Rcpp::List keyWordList) {
+Rcpp::DataFrame greplParallel(Rcpp::Vector id, Rcpp::List stringList, Rcpp::List keyWordList) {
 
   Rcpp::IntegerMatrix output(df.nrows(), keyWordList.length());
 
-  std::vector<std::string> stringVec = join_string_vectors(df["title"], df["abstract"]);
+  if (stringList.size() > 1) {
+
+    std::vector<std::string> stringVec = join_string_list();
+
+  } else {
+
+    std::vector<std::string> stringVec = Rcpp::as<std::string>(stringList[0])
+
+  }
+
   std::vector<std::string> regexVec = concatenate_list_of_strings(keyWordList);
 
   RegexSearch RegexSearch(stringVec, regexVec, output);

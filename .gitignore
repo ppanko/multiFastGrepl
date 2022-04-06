@@ -1,0 +1,6 @@
+Archive/
+.Rhistory
+*~
+.Rproj.user/
+notes.org
+R/setup.R
