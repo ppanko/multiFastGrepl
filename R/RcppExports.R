@@ -8,7 +8,7 @@
 #' ---
 NULL
 
-greplParallel <- function(df, keyWordList) {
-    .Call(`_multiFastGrepl_greplParallel`, df, keyWordList)
+greplParallel <- function(idVec, stringList, keyWordList) {
+    .Call(`_multiFastGrepl_greplParallel`, idVec, stringList, keyWordList)
 }
 

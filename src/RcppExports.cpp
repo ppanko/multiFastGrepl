@@ -11,20 +11,21 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // greplParallel
-Rcpp::DataFrame greplParallel(Rcpp::DataFrame df, Rcpp::List keyWordList);
-RcppExport SEXP _multiFastGrepl_greplParallel(SEXP dfSEXP, SEXP keyWordListSEXP) {
+Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList);
+RcppExport SEXP _multiFastGrepl_greplParallel(SEXP idVecSEXP, SEXP stringListSEXP, SEXP keyWordListSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< Rcpp::DataFrame >::type df(dfSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type idVec(idVecSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type stringList(stringListSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type keyWordList(keyWordListSEXP);
-    rcpp_result_gen = Rcpp::wrap(greplParallel(df, keyWordList));
+    rcpp_result_gen = Rcpp::wrap(greplParallel(idVec, stringList, keyWordList));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_multiFastGrepl_greplParallel", (DL_FUNC) &_multiFastGrepl_greplParallel, 2},
+    {"_multiFastGrepl_greplParallel", (DL_FUNC) &_multiFastGrepl_greplParallel, 3},
     {NULL, NULL, 0}
 };
 
