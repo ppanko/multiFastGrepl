@@ -7,21 +7,19 @@
 #include <Rcpp.h>
 #include <boost/regex.hpp>
 #include <RcppParallel.h>
-#include <boost/xpressive/xpressive.hpp>
 
 using namespace RcppParallel;
 
 std::vector<std::string> join_string_list(const Rcpp::List& stringList) {
 
-  int k = stringList.length();
+  int k = stringList.size();
   int n = Rcpp::as<Rcpp::CharacterVector>(stringList[0]).size();
 
   std::vector<std::string> out(n);
 
-
   for (int i=0; i<n; i++) {
 
-    for (int j=0; i<k; j++) {
+    for (int j=0; j<k; j++) {
 
       out[i] += " " + Rcpp::as<Rcpp::CharacterVector>(stringList[j])[i];
 
@@ -90,13 +88,13 @@ Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList
 
   Rcpp::IntegerMatrix output(idVec.length(), keyWordList.length());
 
-  std::vector<std::string> stringVec = stringList.size() > 1 ? join_string_list(stringList) : Rcpp::as<std::vector<std::string>>(stringList[0]);
+   std::vector<std::string> stringVec = stringList.size() > 1 ? join_string_list(stringList) : Rcpp::as<std::vector<std::string>>(stringList[0]);
 
   std::vector<std::string> regexVec = concatenate_list_of_strings(keyWordList);
 
-  RegexSearch RegexSearch(stringVec, regexVec, output);
+   RegexSearch RegexSearch(stringVec, regexVec, output);
 
-  parallelFor(0, stringVec.size(), RegexSearch);
+   parallelFor(0, stringVec.size(), RegexSearch);
 
-  return matrix_to_dataframe(output, keyWordList.names(), idVec);
+   return matrix_to_dataframe(output, keyWordList.names(), idVec);
 }
