@@ -4,7 +4,7 @@
 #include <Rcpp.h>
 
 template <typename T>
-Rcpp::DataFrame matrix_to_dataframe(T& mat, Rcpp::CharacterVector names, Rcpp::CharacterVector id) {
+inline Rcpp::DataFrame matrix_to_dataframe(T& mat, Rcpp::CharacterVector names, Rcpp::CharacterVector id) {
 
   Rcpp::DataFrame df = Rcpp::DataFrame(mat);
   df.insert(0, id);
@@ -15,7 +15,7 @@ Rcpp::DataFrame matrix_to_dataframe(T& mat, Rcpp::CharacterVector names, Rcpp::C
   return Rcpp::DataFrame(df);
 }
 
-std::string collapseStringVec(Rcpp::CharacterVector toCollapseVec, std::string sep) {
+inline std::string collapseStringVec(Rcpp::CharacterVector toCollapseVec, const char* sep) {
 
   std::vector<std::string> s = Rcpp::as<std::vector<std::string>>(toCollapseVec);
 
