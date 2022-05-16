@@ -15,18 +15,6 @@ Rcpp::DataFrame matrix_to_dataframe(T& mat, Rcpp::CharacterVector names, Rcpp::C
   return Rcpp::DataFrame(df);
 }
 
-Rcpp::DataFrame matrix_to_dataframe(Rcpp::IntegerMatrix& mat, Rcpp::CharacterVector names, Rcpp::CharacterVector id) {
-
-  Rcpp::DataFrame df = Rcpp::DataFrame(mat);
-  df.insert(0, id);
-
-  names.insert(0, "id");
-  df.names() = names;
-
-  return Rcpp::DataFrame(df);
-}
-
-
 std::string collapseStringVec(Rcpp::CharacterVector toCollapseVec, std::string sep) {
 
   std::vector<std::string> s = Rcpp::as<std::vector<std::string>>(toCollapseVec);
