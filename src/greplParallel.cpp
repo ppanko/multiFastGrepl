@@ -4,6 +4,7 @@
 //' date:   '03/31/2022'
 //' ---
 
+#include <helpers.h>
 #include <Rcpp.h>
 #include <boost/regex.hpp>
 #include <RcppParallel.h>
@@ -36,26 +37,12 @@ std::vector<std::string> concatenate_list_of_strings(Rcpp::List myList) {
 
   for (int i=0; i<myList.size(); i++) {
 
-    std::vector<std::string> s = myList[i];
-
-    out[i] = std::accumulate(s.begin(), s.end(), std::string(),[](std::string &x, std::string &y) {
-	      return x.empty() ? y : x + "|" + y;});
+    out[i] = collapseStringVec(myList[i], "|");
 
   }
 
   return out;
 
-}
-
-Rcpp::DataFrame matrix_to_dataframe(Rcpp::IntegerMatrix& mat, Rcpp::CharacterVector names, Rcpp::CharacterVector id) {
-
-  Rcpp::DataFrame df = Rcpp::DataFrame(mat);
-  df.insert(0, id);
-
-  names.insert(0, "id");
-  df.names() = names;
-
-  return Rcpp::DataFrame(df);
 }
 
 // [[Rcpp::depends(RcppParallel)]]
@@ -74,13 +61,20 @@ struct RegexSearch : public Worker
 
   // Perform operation
   void operator()(std::size_t begin, std::size_t end) {
+
     for (std::size_t j = 0; j < regexVec.size(); j++) {
+
       boost::regex re(regexVec[j], boost::regex::icase);
+
       for (std::size_t i = begin; i < end; i++) {
+
 	output(i,j) = boost::regex_search(stringVec[i], re);
       }
+
     }
+
   }
+
 };
 
 // [[Rcpp::export]]

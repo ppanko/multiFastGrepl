@@ -10,6 +10,19 @@ Rcpp::Rostream<true>&  Rcpp::Rcout = Rcpp::Rcpp_cout_get();
 Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
+// getRegexMatches
+Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::CharacterVector id, Rcpp::List patternList);
+RcppExport SEXP _multiFastGrepl_getRegexMatches(SEXP stringMatSEXP, SEXP idSEXP, SEXP patternListSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< Rcpp::CharacterMatrix >::type stringMat(stringMatSEXP);
+    Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type id(idSEXP);
+    Rcpp::traits::input_parameter< Rcpp::List >::type patternList(patternListSEXP);
+    rcpp_result_gen = Rcpp::wrap(getRegexMatches(stringMat, id, patternList));
+    return rcpp_result_gen;
+END_RCPP
+}
 // greplParallel
 Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList);
 RcppExport SEXP _multiFastGrepl_greplParallel(SEXP idVecSEXP, SEXP stringListSEXP, SEXP keyWordListSEXP) {
@@ -25,6 +38,7 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_multiFastGrepl_getRegexMatches", (DL_FUNC) &_multiFastGrepl_getRegexMatches, 3},
     {"_multiFastGrepl_greplParallel", (DL_FUNC) &_multiFastGrepl_greplParallel, 3},
     {NULL, NULL, 0}
 };
