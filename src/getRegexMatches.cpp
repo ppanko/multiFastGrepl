@@ -10,11 +10,23 @@
 
 
 // [[Rcpp::export]]
-Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::CharacterVector id, Rcpp::List patternList) {
+Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::CharacterVector id, Rcpp::List patternList, bool caseSensitive = true) {
 
   //
   int n = stringMat.nrow();
   int k = patternList.size();
+
+  unsigned flag;
+
+  if (caseSensitive) {
+
+    flag = boost::regex::basic;
+
+  } else {
+
+    flag = boost::regex::icase;
+
+  }
 
   Rcpp::CharacterMatrix returnMat(n, k);
 
@@ -23,7 +35,7 @@ Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::Character
 
     //
     std::string pattern = collapseStringVec(patternList[j], "|");
-    boost::regex re(pattern, boost::regex::icase);
+    boost::regex re(pattern, flag);
 
     //
     for (int i = 0; i < n; i++) {
