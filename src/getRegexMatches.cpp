@@ -20,7 +20,7 @@ Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::Character
 
   if (caseSensitive) {
 
-    flag = boost::regex::basic;
+    flag = boost::regex::optimize;
 
   } else {
 
