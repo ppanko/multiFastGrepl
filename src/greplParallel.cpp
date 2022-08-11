@@ -64,7 +64,7 @@ struct RegexSearch : public Worker
 
     for (std::size_t j = 0; j < regexVec.size(); j++) {
 
-      boost::regex re(regexVec[j], boost::regex::icase);
+      boost::regex re(regexVec[j]);
 
       for (std::size_t i = begin; i < end; i++) {
 
