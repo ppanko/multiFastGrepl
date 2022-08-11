@@ -2,6 +2,7 @@
 #define HELPERS_H
 
 #include <Rcpp.h>
+#include <boost/regex.hpp>
 
 template <typename T>
 inline Rcpp::DataFrame matrix_to_dataframe(T& mat, Rcpp::CharacterVector names, Rcpp::CharacterVector id) {
@@ -21,6 +22,24 @@ inline std::string collapseStringVec(Rcpp::CharacterVector toCollapseVec, const 
 
   return std::accumulate(s.begin(), s.end(), std::string(),[&sep](std::string &x, std::string &y) {
     return x.empty() ? y : x + sep + y;});
+
+}
+
+inline boost::regbase::flag_type_ getCaseFlag(bool caseSensitive) {
+
+  boost::regbase::flag_type_ flag;
+
+  if (caseSensitive) {
+
+    flag = boost::regex::optimize;
+
+  } else {
+
+    flag = boost::regex::icase;
+
+  }
+
+  return flag;
 
 }
 

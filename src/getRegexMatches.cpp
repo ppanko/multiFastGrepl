@@ -16,17 +16,7 @@ Rcpp::DataFrame getRegexMatches(Rcpp::CharacterMatrix stringMat, Rcpp::Character
   int n = stringMat.nrow();
   int k = patternList.size();
 
-  unsigned flag;
-
-  if (caseSensitive) {
-
-    flag = boost::regex::optimize;
-
-  } else {
-
-    flag = boost::regex::icase;
-
-  }
+  boost::regbase::flag_type_ flag = getCaseFlag(caseSensitive);
 
   Rcpp::CharacterMatrix returnMat(n, k);
 
