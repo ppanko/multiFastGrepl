@@ -19,7 +19,7 @@ getRegexMatches <- function(stringMat, id, patternList, caseSensitive = TRUE) {
 #' ---
 NULL
 
-greplParallel <- function(idVec, stringList, keyWordList) {
-    .Call(`_multiFastGrepl_greplParallel`, idVec, stringList, keyWordList)
+greplParallel <- function(idVec, stringList, keyWordList, caseSensitive = FALSE) {
+    .Call(`_multiFastGrepl_greplParallel`, idVec, stringList, keyWordList, caseSensitive)
 }
 

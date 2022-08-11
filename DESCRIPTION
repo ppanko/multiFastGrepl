@@ -1,11 +1,11 @@
 Package: multiFastGrepl
 Type: Package
-Title: grepl several patterns, very fast!
-Version: 0.0.0.9002
+Title: grepl several patterns in several columns, very fast!
+Version: 0.0.0.9003
 Date: 2022-03-31
 Author: Pavel Panko
 Maintainer: Pavel Panko <pavelppanko@email.com>
-Description: Specific application of grepl computing in parallel via RcppParallel for sea		   rching across a dataframe with a title and abstract field.
+Description: Specific application of grepl for searching for multiple patterns across several character strings columns in parallel.
 License: GPL (>= 3)
 Imports: Rcpp (>= 1.0.8), RcppParallel (>= 5.1.5)
 LinkingTo: Rcpp, RcppParallel

@@ -48,15 +48,18 @@ std::vector<std::string> concatenate_list_of_strings(Rcpp::List myList) {
 // [[Rcpp::depends(RcppParallel)]]
 struct RegexSearch : public Worker
 {
-   // source objects
+  // source objects
   const std::vector<std::string> stringVec;
   const std::vector<std::string> regexVec;
 
-   // destination matrix
-   RMatrix<int> output;
+  // destination matrix
+  RMatrix<int> output;
 
-   // initialize with source and destination
-  RegexSearch(const std::vector<std::string> stringVec, const std::vector<std::string> regexVec, Rcpp::IntegerMatrix output)
+  // case sensitive flag
+  boost::regbase::flag_type_ flag;
+
+  // initialize with source and destination
+  RegexSearch(const std::vector<std::string> stringVec, const std::vector<std::string> regexVec, Rcpp::IntegerMatrix output, boost::regbase::flag_type_ flag)
     : stringVec(stringVec), regexVec(regexVec), output(output) {}
 
   // Perform operation
@@ -64,7 +67,7 @@ struct RegexSearch : public Worker
 
     for (std::size_t j = 0; j < regexVec.size(); j++) {
 
-      boost::regex re(regexVec[j]);
+      boost::regex re(regexVec[j], flag);
 
       for (std::size_t i = begin; i < end; i++) {
 
@@ -78,17 +81,20 @@ struct RegexSearch : public Worker
 };
 
 // [[Rcpp::export]]
-Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList) {
+Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList, bool caseSensitive = false) {
 
   Rcpp::IntegerMatrix output(idVec.length(), keyWordList.length());
 
-   std::vector<std::string> stringVec = stringList.size() > 1 ? join_string_list(stringList) : Rcpp::as<std::vector<std::string>>(stringList[0]);
+  std::vector<std::string> stringVec = stringList.size() > 1 ? join_string_list(stringList) : Rcpp::as<std::vector<std::string>>(stringList[0]);
 
   std::vector<std::string> regexVec = concatenate_list_of_strings(keyWordList);
 
-   RegexSearch RegexSearch(stringVec, regexVec, output);
+  boost::regbase::flag_type_ flag = getCaseFlag(caseSensitive);
 
-   parallelFor(0, stringVec.size(), RegexSearch);
+  RegexSearch RegexSearch(stringVec, regexVec, output, flag);
 
-   return matrix_to_dataframe(output, keyWordList.names(), idVec);
+  parallelFor(0, stringVec.size(), RegexSearch);
+
+  return matrix_to_dataframe(output, keyWordList.names(), idVec);
+
 }

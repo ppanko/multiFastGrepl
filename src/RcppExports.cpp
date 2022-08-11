@@ -25,22 +25,23 @@ BEGIN_RCPP
 END_RCPP
 }
 // greplParallel
-Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList);
-RcppExport SEXP _multiFastGrepl_greplParallel(SEXP idVecSEXP, SEXP stringListSEXP, SEXP keyWordListSEXP) {
+Rcpp::DataFrame greplParallel(Rcpp::CharacterVector idVec, Rcpp::List stringList, Rcpp::List keyWordList, bool caseSensitive);
+RcppExport SEXP _multiFastGrepl_greplParallel(SEXP idVecSEXP, SEXP stringListSEXP, SEXP keyWordListSEXP, SEXP caseSensitiveSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< Rcpp::CharacterVector >::type idVec(idVecSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type stringList(stringListSEXP);
     Rcpp::traits::input_parameter< Rcpp::List >::type keyWordList(keyWordListSEXP);
-    rcpp_result_gen = Rcpp::wrap(greplParallel(idVec, stringList, keyWordList));
+    Rcpp::traits::input_parameter< bool >::type caseSensitive(caseSensitiveSEXP);
+    rcpp_result_gen = Rcpp::wrap(greplParallel(idVec, stringList, keyWordList, caseSensitive));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
     {"_multiFastGrepl_getRegexMatches", (DL_FUNC) &_multiFastGrepl_getRegexMatches, 4},
-    {"_multiFastGrepl_greplParallel", (DL_FUNC) &_multiFastGrepl_greplParallel, 3},
+    {"_multiFastGrepl_greplParallel", (DL_FUNC) &_multiFastGrepl_greplParallel, 4},
     {NULL, NULL, 0}
 };
 
