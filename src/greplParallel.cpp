@@ -56,11 +56,11 @@ struct RegexSearch : public Worker
   RMatrix<int> output;
 
   // case sensitive flag
-  boost::regbase::flag_type_ flag;
+  const boost::regbase::flag_type_ flag;
 
   // initialize with source and destination
   RegexSearch(const std::vector<std::string> stringVec, const std::vector<std::string> regexVec, Rcpp::IntegerMatrix output, boost::regbase::flag_type_ flag)
-    : stringVec(stringVec), regexVec(regexVec), output(output) {}
+    : stringVec(stringVec), regexVec(regexVec), output(output), flag(flag) {}
 
   // Perform operation
   void operator()(std::size_t begin, std::size_t end) {
