@@ -1,4 +1,5 @@
 useDynLib(multiFastGrepl, .registration=TRUE)
 importFrom(Rcpp, evalCpp)
-exportPattern("^[[:alpha:]]+")
 importFrom(RcppParallel,RcppParallelLibs)
+importFrom(janitor, make_clean_names)
+export(multiGrepl, getRegexMatches)
