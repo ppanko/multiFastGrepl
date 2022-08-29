@@ -35,7 +35,7 @@ multiGrepl <- function(df, id, searchCols, patternMatches) {
   }
 
   greplDf <- greplParallel(
-    idVec       = id,
+    idVec       = df[[id]],
     stringList  = as.list(df[searchCols]),
     keyWordList = patternMatches
   )
