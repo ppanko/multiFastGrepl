@@ -1,8 +1,8 @@
 Package: multiFastGrepl
 Type: Package
 Title: grepl several patterns in several columns very quickly!
-Version: 0.0.0.9004
-Date: 2022-08-29
+Version: 0.0.0.9005
+Date: 2022-09-12
 Author: Pavel Panko
 Maintainer: Pavel Panko <pavelppanko@email.com>
 Description: Specific application of grepl for searching for multiple patterns across several character string columns in parallel.
